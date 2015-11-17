@@ -49,6 +49,12 @@ var roomsManager = {
     gameLoop(currentRoomName, this); // 2nd param is passing a reference to the room manager for the gameLoop
   },
 
+  // This function deletes the room after the game has ended to prevent memory leaks of old games.
+  // It's called from gameLoop when a winner has been discovered.
+  endGame: function (roomName) {
+    delete rooms[roomName];
+  },
+
   placePlayer: function (socket) {
     //Make a new room if none exist
     if (!currentRoomName) {
@@ -72,10 +78,14 @@ var roomsManager = {
     var roomName = socket.room;
     var room = this.getRoom(roomName);
 
-    if (room.gameInProgress) {
-      // kill snake and pass player index
+    if (room && room.gameInProgress) {
+      room.game.killSnake(this.getPlayerIndex(socket));
     } else {
       //remove a player from the room if the game has not started.
+      if (!room) {
+        return;
+      }
+
       room.players = room.players.filter(function(player) {
         return player !== socket.id;
       });
