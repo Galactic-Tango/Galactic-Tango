@@ -44,8 +44,12 @@ npm install
 bower install
 ```
 
-### Tasks
+### Grunt
 
-Grunt?
+grunt default --> concat files, minify files, minify css
+grunt deploy --> default + deploy to heroku
 
+### Backlog
+
+Backlog of issues stored at https://trello.com/b/FPijGj65/galactic-tango
 
