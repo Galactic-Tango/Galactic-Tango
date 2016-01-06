@@ -4,6 +4,7 @@
   app.gameStart = false; // keeps track of whether a game is currently in progress
   var gameOver = document.getElementById('gameOver'); //the lose/win message div
   var readyButton = document.getElementById('readyButton');
+  // var startAnyway = document.getElementById('startAnyway');
   readyButton.pressed = false; //keeps track of whether or not the button is clickable.
 
   //sets the class of the ready button based on game state.  only the init style has been implemented
@@ -15,6 +16,7 @@
     } else {
       readyButton.className = 'init';
       readyButton.textContent = 'Ready';
+      // startAnyway.className = 'hide';
     }
     if (app.gameStart) {
       console.log('game on!');
@@ -32,6 +34,8 @@
       this.pressed = true;
       gameOver.style.display = 'none';
       setButtonStyle();
+    } else if(this.pressed && !app.gameStart) {
+      app.socket.emit('stopWaiting')
     }
   });
 

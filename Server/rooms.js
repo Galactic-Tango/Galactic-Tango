@@ -40,13 +40,14 @@ var roomsManager = {
   launchGame: function () {
     var room = rooms[currentRoomName];
     //add a game state to the current room
-    room.game = new GameBoard(settings.maxSnakes, settings.boardDimensions[0], settings.boardDimensions[1], settings.snakeStartLength, settings.starAdder);
+    room.game = new GameBoard(room.players.length, settings.boardDimensions[0], settings.boardDimensions[1], settings.snakeStartLength, settings.starAdder);
     //On game start, tell each client their index so they can know what color snake they are
     for (var i = 0; i < room.players.length; i++) {
       io.to(room.players[i]).emit('gameStart', i);
     }
     this.getRoom(currentRoomName).gameInProgress = true;
     gameLoop(currentRoomName, this); // 2nd param is passing a reference to the room manager for the gameLoop
+    currentRoomName = null;
   },
 
   // This function deletes the room after the game has ended to prevent memory leaks of old games.
@@ -70,7 +71,7 @@ var roomsManager = {
 
     if(rooms[currentRoomName].players.length === settings.maxSnakes){
       this.launchGame();
-      currentRoomName = null;
+      // currentRoomName = null;
     }
   },
 
