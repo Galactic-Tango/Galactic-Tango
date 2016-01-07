@@ -10,8 +10,8 @@
   var setButtonStyle = function () {
     if(readyButton.pressed) {
       console.log('waiting');
-      readyButton.className = 'load';
-      readyButton.textContent = 'Waiting...';
+      readyButton.className = 'init';
+      readyButton.textContent = 'Room not full. Start Anyway?';
     } else {
       readyButton.className = 'init';
       readyButton.textContent = 'Ready';
@@ -90,7 +90,7 @@
         app.userId = userId;
         app.gameStart = true;
         setBorderColor();
-
+        setButtonStyle();
         var counter = 4;
         readyButton.textContent = --counter;
         var timer = setInterval(function () {
