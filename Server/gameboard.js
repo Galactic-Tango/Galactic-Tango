@@ -143,7 +143,9 @@ Gameboard.prototype.killSnake = function (snakeIndex){
       deadSnakes++;
     }
   }
-
+  if(deadSnakes === this.numPlayer) {
+    return this.numPlayer+1;
+  }
   return (deadSnakes+1 === this.numPlayer) ? winner : -1;
 };
 

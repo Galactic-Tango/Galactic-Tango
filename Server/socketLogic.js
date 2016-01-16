@@ -20,5 +20,9 @@ module.exports = function (socket) {
     rooms.placePlayer(socket);
   });
 
+  socket.on('stopWaiting', function () {
+    rooms.launchGame();
+  })
+
   rooms.placePlayer(socket);
 };
